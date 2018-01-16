@@ -20,11 +20,13 @@ public class HistogramDisplay<T> extends ApplicationFrame {
 
     private final Histogram<T> histogram;
     private final String nameEjeX;
+    private final String nameEjeY;
 
-    public HistogramDisplay(Histogram<T> histogram, String nameEjeX) {
+    public HistogramDisplay(Histogram<T> histogram, String nameEjeX,String nameEjeY) {
         super("HISTOGRAMA");
         this.histogram = histogram;
         this.nameEjeX = nameEjeX;
+        this.nameEjeY = nameEjeY;
         setContentPane(createPanel());
         pack();
     }

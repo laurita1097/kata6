@@ -5,12 +5,13 @@
  */
 package kata6_2;
 
-import kata6_2.Histogram;
-import kata6_2.Mail;
+
 import view_2.HistogramDisplay;
 import view_2.HistogramBuilder;
 import view_2.MailListReader;
 import java.util.List;
+
+import view_2.DatabaseList;
 
 public class Kata6_2 {
 
@@ -30,7 +31,7 @@ public class Kata6_2 {
             }
         });
 
-        new HistogramDisplay(domains, "Dominios").execute();
+        new HistogramDisplay(domains, "Dominios", "Nº Emails").execute();
 
         Histogram<Character> characters = builder.build(new Attribute<Mail, Character>() {
             @Override
@@ -39,6 +40,27 @@ public class Kata6_2 {
             }
         });
 
-        new HistogramDisplay(characters, "Primer Caracter").execute();
+        new HistogramDisplay(characters, "Primer Caracter", "Nº Emails").execute();
+        List< Person> people = DatabaseList.read("KATA.sDB");
+        HistogramBuilder< Person> builderPerson = new HistogramBuilder<>(people);
+        Histogram< Character> gender = builderPerson.build(new Attribute<Person, Character>() {
+            @Override
+
+            public Character get(Person item) {
+                return item.getGender();
+            }
+
+        });
+        new HistogramDisplay(gender, "Géneros", "Nº personas").execute();
+
+        Histogram<Float> weights = builderPerson.build(new Attribute<Person, Float>() {
+            @Override
+            public Float get(Person item) {
+                return item.getWeight();
+            }
+        });
+
+        new HistogramDisplay(weights, "Pesos", "Nº personas").execute();
     }
 }
+
