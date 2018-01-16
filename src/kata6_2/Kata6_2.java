@@ -8,10 +8,10 @@ package kata6_2;
 import kata6_2.Histogram;
 import kata6_2.Mail;
 import view_2.HistogramDisplay;
-import view_2.MailHistogramBuilder;
+import view_2.HistogramBuilder;
 import view_2.MailListReader;
 import java.util.List;
-import kata6_2.Histogram;
+
 public class Kata6_2 {
 
     private String fileName;
@@ -20,27 +20,25 @@ public class Kata6_2 {
     private HistogramDisplay histogramDisplay;
 
     public static void main(String[] args) {
-        Kata6_2 kata = new Kata6_2();
-        kata.execute();
-    }
+        String nameFile = "emails.txt";
+        List<Mail> listMail = MailListReader.read(nameFile);
+        HistogramBuilder<Mail> builder = new HistogramBuilder<>(listMail);
+        Histogram<String> domains = builder.build(new Attribute<Mail, String>() {
+            @Override
+            public String get(Mail item) {
+                return item.getMail().split("@")[1];
+            }
+        });
 
-    private void execute() {
-        input();
-        proccess();
-        output();
-    }
+        new HistogramDisplay(domains, "Dominios").execute();
 
-    private void input() {
-        fileName = "emails.txt";
-        mailList = MailListReader.read(fileName);
-    }
+        Histogram<Character> characters = builder.build(new Attribute<Mail, Character>() {
+            @Override
+            public Character get(Mail item) {
+                return item.getMail().charAt(0);
+            }
+        });
 
-    private void proccess() {
-        histogram = MailHistogramBuilder.build(mailList);
-    }
-
-    private void output() {
-        histogramDisplay = new HistogramDisplay(histogram);
-        histogramDisplay.execute();
+        new HistogramDisplay(characters, "Primer Caracter").execute();
     }
 }

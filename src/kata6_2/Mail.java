@@ -8,16 +8,18 @@ package kata6_2;
 public class Mail {
 
     private final String mail;
+    private final int id;
 
-    public Mail(String mail) {
+    public Mail(int id, String mail) {
         this.mail = mail;
+        this.id = id;
     }
 
-    public String getDomain() {
-        int index = mail.indexOf("@");
-        if (index >= 0) {
-            return mail.substring(index + 1);
-        }
-        return null;
+    public int getId() {
+        return id;
+    }
+
+    public String getMail() {
+        return mail;
     }
 }

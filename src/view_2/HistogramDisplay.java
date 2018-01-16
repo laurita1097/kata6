@@ -6,23 +6,25 @@
 package view_2;
 
 import kata6_2.Histogram;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.ApplicationFrame;
+ import org.jfree.chart.ChartFactory;
+ import org.jfree.chart.ChartPanel;
+ import org.jfree.chart.JFreeChart;
+ import org.jfree.chart.plot.PlotOrientation;
+ import org.jfree.data.category.DefaultCategoryDataset;
+ import org.jfree.ui.ApplicationFrame;
+ 
+ import javax.swing.*;
+  import java.awt.*;
 
-import javax.swing.*;
-import java.awt.*;
+public class HistogramDisplay<T> extends ApplicationFrame {
 
-public class HistogramDisplay extends ApplicationFrame {
+    private final Histogram<T> histogram;
+    private final String nameEjeX;
 
-    private final Histogram<String> histogram;
-
-    public HistogramDisplay(Histogram<String> histogram) {
+    public HistogramDisplay(Histogram<T> histogram, String nameEjeX) {
         super("HISTOGRAMA");
         this.histogram = histogram;
+        this.nameEjeX = nameEjeX;
         setContentPane(createPanel());
         pack();
     }
@@ -39,7 +41,7 @@ public class HistogramDisplay extends ApplicationFrame {
 
     private JFreeChart createChart(DefaultCategoryDataset dataSet) {
         JFreeChart chart = ChartFactory.createBarChart("Histograma JFreeChart",
-                "Dominios email",
+                nameEjeX,
                 "Nº emails",
                 dataSet,
                 PlotOrientation.VERTICAL,
@@ -51,8 +53,8 @@ public class HistogramDisplay extends ApplicationFrame {
 
     private DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-        for (String key : histogram.keySet()) {
-            dataSet.addValue(histogram.get(key), "", key);
+        for (T key : histogram.keySet()) {
+            dataSet.addValue(histogram.get(key), "", (Comparable) key);
         }
         return dataSet;
     }

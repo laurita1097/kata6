@@ -20,12 +20,13 @@ public class MailListReader {
 
     public static List<Mail> read(String fileName) {
         ArrayList<Mail> list = new ArrayList<>();
+        Integer id = 0;
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.contains("@")) {
-                    list.add(new Mail(line));
+                    list.add(new Mail(id,line));
                 }
             }
             bufferedReader.close();
